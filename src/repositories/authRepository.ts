@@ -7,10 +7,10 @@ export async function registerUser(user: User) {
   await db.users.create({ data: user });
 }
 
-export async function findUserByEmail(email: string): Promise<Users | null> {
+export function findUserByEmail(email: string): Promise<Users | null> {
   return db.users.findUnique({ where: { email } });
 }
 
-export async function findUserById(id: number): Promise<Users | null> {
+export function findUserById(id: number): Promise<Users | null> {
   return db.users.findUnique({ where: { id } });
 }
