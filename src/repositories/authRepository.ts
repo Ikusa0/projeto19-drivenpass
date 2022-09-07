@@ -1,7 +1,12 @@
 import { Users } from "@prisma/client";
 import db from "../databases/prisma";
 
-export async function registerUser(user: { email: string; password: string }) {
+export interface NewUser {
+  email: string;
+  password: string;
+}
+
+export async function registerUser(user: NewUser) {
   await db.users.create({ data: user });
 }
 
