@@ -1,6 +1,6 @@
 import { Users } from "@prisma/client";
 import { CustomError } from "../../entities/customError";
-import { NewUser } from "../../repositories/authRepository";
+import { User } from "../../repositories/authRepository";
 import * as authRepository from "../../repositories/authRepository";
 
 export function ensureUserExists(user: Users) {
@@ -12,11 +12,11 @@ export function ensureUserExists(user: Users) {
   }
 }
 
-export async function ensureUserDoesNotExist(newUser: NewUser) {
-  const user: Users | null = await authRepository.findUserByEmail(
-    newUser.email
+export async function ensureUserDoesNotExist(user: User) {
+  const userInDb: Users | null = await authRepository.findUserByEmail(
+    user.email
   );
-  if (user) {
+  if (userInDb) {
     throw new CustomError({
       type: "error_conflict",
       message: "User already exists",
