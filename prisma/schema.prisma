@@ -15,6 +15,7 @@ model Users {
   email       String        @unique
   password    String
   Credentials Credentials[]
+  Annotation  Annotation[]
 }
 
 model Credentials {
@@ -24,7 +25,17 @@ model Credentials {
   url      String
   username String
   password String
-  title    String
+  title    String @db.VarChar(50)
+
+  @@unique([ownerId, title])
+}
+
+model Annotation {
+  id          Int    @id @default(autoincrement())
+  owner       Users  @relation(fields: [ownerId], references: [id])
+  ownerId     Int
+  title       String @db.VarChar(50)
+  description String @db.VarChar(1000)
 
   @@unique([ownerId, title])
 }
