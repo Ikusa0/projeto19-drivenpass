@@ -1,7 +1,7 @@
-import * as authRepository from "../repositories/authRepository";
-import { User } from "../repositories/authRepository";
-import * as authValidation from "./authService/authValidation";
-import * as cryptographyUtils from "../utils/cryptographyUtils";
+import * as authRepository from "../../repositories/authRepository";
+import { User } from "../../repositories/authRepository";
+import * as authValidation from "./authValidation";
+import * as cryptographyUtils from "../../utils/cryptographyUtils";
 
 export async function registerUser(user: User) {
   const { email, password }: User = user;

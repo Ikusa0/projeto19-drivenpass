@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../repositories/authRepository";
-import * as authService from "../services/authService";
+import * as authService from "../services/authService/authService";
 
 export async function registerUser(req: Request, res: Response) {
   const { email, password }: User = req.body;
