@@ -4,7 +4,6 @@ import { joiPasswordExtendCore } from "joi-password";
 const joiPassword = joi.extend(joiPasswordExtendCore);
 
 export const newUserSchema = joi.object({
-  name: joi.string().trim().label("Name").required(),
   // eslint-disable-next-line newline-per-chained-call
   email: joi.string().trim().email().label("Email").required(),
   password: joiPassword
