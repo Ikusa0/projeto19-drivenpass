@@ -8,7 +8,7 @@ export function ensureUserExists(user: Users | null) {
   if (!user) {
     throw new CustomError({
       type: "error_unauthorized",
-      message: "Invalid email or password",
+      message: "Invalid user",
     });
   }
 }
@@ -29,7 +29,7 @@ export function validatePassword(password: string, user: Users) {
   if (!cryptographyUtils.compareHashedString(user.password, password)) {
     throw new CustomError({
       type: "error_unauthorized",
-      message: "Invalid email or password",
+      message: "Invalid user",
     });
   }
 }
