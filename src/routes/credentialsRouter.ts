@@ -14,5 +14,9 @@ credentialsRouter.get(
   "/credentials/:id",
   credentialsController.getCredentialById
 );
+credentialsRouter.delete(
+  "/credentials/:id",
+  credentialsController.deleteCredentialById
+);
 
 export default credentialsRouter;

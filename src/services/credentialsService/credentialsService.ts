@@ -45,12 +45,28 @@ export async function getCredentialById(
   const owner: Users | null = await authRepository.findUserById(ownerId);
   authValidation.ensureUserExists(owner);
 
-  const credential = await credentialsRepository.findCredentialById(
-    credentialId
-  );
+  const credential: Credentials | null =
+    await credentialsRepository.findCredentialById(credentialId);
+
   credentialsValidation.ensureCredentialExists(credential);
   credentialsValidation.isOwner(credential!, owner!);
 
   credential!.password = cryptographyUtils.decryptString(credential!.password);
   return credential!;
+}
+
+export async function deleteCredentialById(
+  ownerId: number,
+  credentialId: number
+) {
+  const owner: Users | null = await authRepository.findUserById(ownerId);
+  authValidation.ensureUserExists(owner);
+
+  const credential: Credentials | null =
+    await credentialsRepository.findCredentialById(credentialId);
+
+  credentialsValidation.ensureCredentialExists(credential);
+  credentialsValidation.isOwner(credential!, owner!);
+
+  await credentialsRepository.deleteCredentialById(credentialId);
 }

@@ -23,3 +23,7 @@ export function findCredentialByOwnerIdAndTitle(
     where: { ownerId_title: { ownerId, title } },
   });
 }
+
+export async function deleteCredentialById(id: number) {
+  await db.credentials.delete({ where: { id } });
+}
