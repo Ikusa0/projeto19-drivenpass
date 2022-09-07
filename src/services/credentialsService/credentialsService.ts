@@ -37,3 +37,20 @@ export async function getUserCredentials(
   );
   return decryptedCredentials;
 }
+
+export async function getCredentialById(
+  ownerId: number,
+  credentialId: number
+): Promise<Credentials> {
+  const owner: Users | null = await authRepository.findUserById(ownerId);
+  authValidation.ensureUserExists(owner);
+
+  const credential = await credentialsRepository.findCredentialById(
+    credentialId
+  );
+  credentialsValidation.ensureCredentialExists(credential);
+  credentialsValidation.isOwner(credential!, owner!);
+
+  credential!.password = cryptographyUtils.decryptString(credential!.password);
+  return credential!;
+}

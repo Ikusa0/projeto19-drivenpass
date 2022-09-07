@@ -18,3 +18,15 @@ export async function getUserCredentials(req: Request, res: Response) {
     await credentialsService.getUserCredentials(ownerId);
   res.send(credentials);
 }
+
+export async function getCredentialById(req: Request, res: Response) {
+  const ownerId: number = 2;
+  const credentialId: number = Number(req.params.id);
+
+  const credential: Credentials = await credentialsService.getCredentialById(
+    ownerId,
+    credentialId
+  );
+
+  res.send(credential);
+}

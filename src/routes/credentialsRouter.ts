@@ -10,5 +10,9 @@ credentialsRouter.post(
   credentialsController.registerCredential
 );
 credentialsRouter.get("/credentials", credentialsController.getUserCredentials);
+credentialsRouter.get(
+  "/credentials/:id",
+  credentialsController.getCredentialById
+);
 
 export default credentialsRouter;
