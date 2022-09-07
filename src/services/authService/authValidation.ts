@@ -2,12 +2,13 @@ import { Users } from "@prisma/client";
 import { CustomError } from "../../entities/customError";
 import { User } from "../../repositories/authRepository";
 import * as authRepository from "../../repositories/authRepository";
+import * as cryptographyUtils from "../../utils/cryptographyUtils";
 
-export function ensureUserExists(user: Users) {
+export function ensureUserExists(user: Users | null) {
   if (!user) {
     throw new CustomError({
-      type: "error_not_found",
-      message: "User does not exist",
+      type: "error_unauthorized",
+      message: "Invalid email or password",
     });
   }
 }
@@ -20,6 +21,15 @@ export async function ensureUserDoesNotExist(user: User) {
     throw new CustomError({
       type: "error_conflict",
       message: "User already exists",
+    });
+  }
+}
+
+export function validatePassword(password: string, user: Users) {
+  if (!cryptographyUtils.compareHashedString(user.password, password)) {
+    throw new CustomError({
+      type: "error_unauthorized",
+      message: "Invalid email or password",
     });
   }
 }

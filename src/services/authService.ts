@@ -10,3 +10,11 @@ export async function registerUser(user: User) {
   const hashedPassword = cryptographyUtils.hashString(password);
   await authRepository.registerUser({ email, password: hashedPassword });
 }
+
+export async function logInUser(user: User) {
+  const { email, password }: User = user;
+  const userInDb = await authRepository.findUserByEmail(email);
+
+  authValidation.ensureUserExists(userInDb);
+  authValidation.validatePassword(password, userInDb!);
+}
