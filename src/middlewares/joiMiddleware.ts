@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import schemas from "../schemas/allSchemas.js";
+import schemas from "../schemas/allSchemas";
 
 export default function validateJoi(schema: keyof typeof schemas) {
   if (!schemas[schema]) {
