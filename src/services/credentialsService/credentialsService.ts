@@ -1,4 +1,4 @@
-import { Users } from "@prisma/client";
+import { Users, Credentials } from "@prisma/client";
 import * as credentialsRepository from "../../repositories/credentialsRepository";
 import { Credential } from "../../repositories/credentialsRepository";
 import * as authRepository from "../../repositories/authRepository";
@@ -21,4 +21,19 @@ export async function registerCredential(credential: Credential) {
     ...credential,
     password: encryptedPassword,
   });
+}
+
+export async function getUserCredentials(
+  ownerId: number
+): Promise<Credentials[]> {
+  const owner: Users | null = await authRepository.findUserById(ownerId);
+  authValidation.ensureUserExists(owner);
+
+  const credentials: Credentials[] =
+    await credentialsRepository.findUserCredentials(ownerId);
+  const decryptedCredentials = cryptographyUtils.decryptObjectArray(
+    credentials,
+    ["password"]
+  );
+  return decryptedCredentials;
 }

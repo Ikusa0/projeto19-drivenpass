@@ -24,3 +24,17 @@ export function decryptString(encrypted: string): string {
   const decryptedString = cryptr.decrypt(encrypted);
   return decryptedString;
 }
+
+export function decryptObjectArray(arr: any[], keys: string[]): any[] {
+  const decryptedArray: any[] = [...arr].map((obj: any) => {
+    const newObj = { ...obj };
+
+    keys.forEach((key: string) => {
+      newObj[key] = decryptString(obj[key]);
+    });
+
+    return newObj;
+  });
+
+  return decryptedArray;
+}

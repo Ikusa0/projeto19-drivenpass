@@ -9,5 +9,6 @@ credentialsRouter.post(
   validateJoi("registerCredential"),
   credentialsController.registerCredential
 );
+credentialsRouter.get("/credentials", credentialsController.getUserCredentials);
 
 export default credentialsRouter;
