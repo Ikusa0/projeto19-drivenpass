@@ -15,7 +15,8 @@ model Users {
   email       String        @unique
   password    String
   Credentials Credentials[]
-  Annotation  Annotation[]
+  Annotations Annotations[]
+  Cards       Cards[]
 }
 
 model Credentials {
@@ -30,7 +31,7 @@ model Credentials {
   @@unique([ownerId, title])
 }
 
-model Annotation {
+model Annotations {
   id          Int    @id @default(autoincrement())
   owner       Users  @relation(fields: [ownerId], references: [id])
   ownerId     Int
@@ -38,4 +39,26 @@ model Annotation {
   description String @db.VarChar(1000)
 
   @@unique([ownerId, title])
+}
+
+model Cards {
+  id             Int      @id @default(autoincrement())
+  owner          Users    @relation(fields: [ownerId], references: [id])
+  ownerId        Int
+  title          String   @db.VarChar(50)
+  number         String
+  name           String
+  securityCode   String   @db.VarChar(4)
+  expirationDate DateTime @db.Date
+  password       String
+  isVirtual      Boolean  @default(false)
+  type           CardType
+
+  @@unique([ownerId, title])
+}
+
+enum CardType {
+  CREDIT
+  DEBIT
+  BOTH
 }
