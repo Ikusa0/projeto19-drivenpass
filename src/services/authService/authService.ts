@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import * as authRepository from "../../repositories/authRepository";
 import { User } from "../../repositories/authRepository";
 import * as authValidation from "./authValidation";
@@ -17,4 +18,9 @@ export async function logInUser(user: User) {
 
   authValidation.ensureUserExists(userInDb);
   authValidation.validatePassword(password, userInDb!);
+
+  const token: string = jwt.sign({ id: userInDb!.id }, process.env.JWT_SECRET, {
+    expiresIn: "1d",
+  });
+  return token;
 }

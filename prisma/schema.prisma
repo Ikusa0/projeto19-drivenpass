@@ -17,6 +17,7 @@ model Users {
   Credentials Credentials[]
   Annotations Annotations[]
   Cards       Cards[]
+  Wifis        Wifis[]
 }
 
 model Credentials {
@@ -48,8 +49,8 @@ model Cards {
   title          String   @db.VarChar(50)
   number         String
   name           String
-  securityCode   String   @db.VarChar(4)
-  expirationDate DateTime @db.Date
+  securityCode   String
+  expirationDate String
   password       String
   isVirtual      Boolean  @default(false)
   type           CardType
@@ -61,4 +62,13 @@ enum CardType {
   CREDIT
   DEBIT
   BOTH
+}
+
+model Wifis {
+  id       Int    @id @default(autoincrement())
+  owner    Users  @relation(fields: [ownerId], references: [id])
+  ownerId  Int
+  title    String @db.VarChar(50)
+  name     String
+  password String
 }
