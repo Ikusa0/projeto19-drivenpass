@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "build": "tsc && prisma migrate deploy",
+    "build": "tsc && prisma generate && prisma migrate deploy",
     "start": "node ./dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only --rs --exit-child --ignore-watch node_modules ./src/index.ts "
   },
